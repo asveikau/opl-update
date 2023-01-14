@@ -21,7 +21,7 @@ fi
 $MAKE -C submodules/cue2pops clean all
 
 cd PSX
-for cuefile in *.cue; do 
+for cuefile in *.cue; do
    echo $cuefile
    gameid=""
    grep ^FILE\ \" "$cuefile" | sed s/^FILE\ \"// | sed s/\"\ BINARY.*$// | while read binfile; do
@@ -50,7 +50,7 @@ for isofile in PS2/*.iso; do
       echo $gameid
       if [ `ls out/ul*.$gameid.* 2>/dev/null | wc -l` != 0 ]; then
          continue
-      fi 
+      fi
       submodules/iso2opl/iso2opl "$isofile" out "`echo $isofile | cut -d / -f 2- | sed s/\.iso$// | fold -w 32 | head -n 1`" DVD
    fi
 done
