@@ -1,0 +1,9 @@
+[submodule "submodules/POPS-binaries"]
+	path = submodules/POPS-binaries
+	url = git@github.com:AnimMouse/POPS-binaries
+[submodule "submodules/cue2pops"]
+	path = submodules/cue2pops
+	url = git@github.com:asveikau/cue2pops.git
+[submodule "submodules/iso2opl"]
+	path = submodules/iso2opl
+	url = git@github.com:asveikau/iso2opl.git
