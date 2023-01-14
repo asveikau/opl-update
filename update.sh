@@ -1,5 +1,11 @@
 #!/bin/sh
 
+if [ x`which gmake 2>/dev/null` != x ]; then
+   MAKE=gmake
+else
+   MAKE=make
+fi
+
 mkdir -p PSX PS2
 
 if [ ! -d out/POPS ]; then
@@ -12,7 +18,7 @@ if [ ! -d out/POPS ]; then
    mv out/POPS-tmp out/POPS
 fi
 
-gmake -C submodules/cue2pops clean all 
+$MAKE -C submodules/cue2pops clean all
 
 cd PSX
 for cuefile in *.cue; do 
@@ -36,7 +42,7 @@ for cuefile in *.cue; do
 done
 cd ..
 
-gmake -C submodules/iso2opl clean all 
+$MAKE -C submodules/iso2opl clean all
 
 for isofile in PS2/*.iso; do
    gameid="`head -c $((10*1024*1024)) "$isofile" | strings | grep BOOT2 | sed -z s/.*cdrom0:'\\\\'// | sed s/\;.*$//`"
