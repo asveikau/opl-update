@@ -14,7 +14,7 @@ A Unix-like OS is assumed.  I personally run this on FreeBSD.  I expect Linux to
 
 1. Clone the repo.
 
-2. `git submodule --update init` to fetch dependencies
+2. `git submodule update --init` to fetch dependencies
 
 3. Create two folders, `PSX` and `PS2`.  Stick bin/cue backups in the former, ISOs in the latter.
 
