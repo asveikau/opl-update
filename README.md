@@ -24,3 +24,5 @@ Note: Use on BSD will require GNU make installed from ports or packages.
 
 This will create a directory called `out`.  This can be shared directly as an SMB share for use with OPL's
 network functionality.  Or you can copy the contents to a USB drive.
+
+Note to anyone reading, for PS1 games to work you will need the "db" version of OPL, not "ifcaro".
