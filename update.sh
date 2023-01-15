@@ -31,7 +31,7 @@ for cuefile in *.cue; do
       gameid="`head -c $((4*1024*1024)) "$binfile" | strings | grep BOOT | sed -z s/.*cdrom:'\\\\'// | sed s/\;.*$//`"
       if [ "$gameid" != "" ]; then
          echo $gameid
-         filename=../out/POPS/"$gameid.`echo $cuefile | sed s/cue$/vcd/`"
+         filename=../out/POPS/"$gameid.`echo $cuefile | sed s/cue$/VCD/`"
          if [ -f "$filename" ]; then
             break;
          fi
