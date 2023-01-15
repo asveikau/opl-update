@@ -35,7 +35,7 @@ for cuefile in *.cue; do
          if [ -f "$filename" ]; then
             break;
          fi
-         ../submodules/cue2pops/cue2pops "$cuefile" ../out/POPS/"$gameid `echo $cuefile | sed s/cue$/vcd/`"
+         ../submodules/cue2pops/cue2pops "$cuefile" "$filename"
          break;
       fi
    done
