@@ -20,6 +20,8 @@ fi
 
 $MAKE -C submodules/cue2pops clean all
 
+bufsz=20
+
 cd PSX
 for cuefile in *.cue; do
    echo $cuefile
@@ -28,7 +30,8 @@ for cuefile in *.cue; do
       # Hacky way to parse gameid straight from the ISO, without proper parsing.
       # One advantage is this doesn't require loopback mounting (so you don't need to be root, and it's
       # quite portable.)
-      gameid="`head -c $((4*1024*1024)) "$binfile" | strings | grep BOOT | sed -z s/.*cdrom:'\\\\'// | sed s/\;.*$//`"
+      gameid="`head -c $(($bufsz*1024*1024)) "$binfile" | strings | grep BOOT | sed -z s/.*cdrom:'\\\\'// | sed s/\;.*$// `"
+      gameid="`echo $gameid | sed s/\ .*//`"
       if [ "$gameid" != "" ]; then
          echo $gameid
          filename=../out/POPS/"$gameid.`echo $cuefile | sed s/cue$/VCD/`"
@@ -45,7 +48,8 @@ cd ..
 $MAKE -C submodules/iso2opl clean all
 
 for isofile in PS2/*.iso; do
-   gameid="`head -c $((10*1024*1024)) "$isofile" | strings | grep BOOT2 | sed -z s/.*cdrom0:'\\\\'// | sed s/\;.*$//`"
+   gameid="`head -c $(($bufsz*1024*1024)) "$isofile" | strings | grep BOOT2 | sed -z s/.*cdrom0:'\\\\'// | sed s/\;.*$//`"
+   gameid="`echo $gameid | sed s/\ .*//`"
    if [ "$gameid" != "" ]; then
       echo $gameid
       if [ `ls out/ul*.$gameid.* 2>/dev/null | wc -l` != 0 ]; then
