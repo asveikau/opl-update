@@ -48,6 +48,7 @@ cd ..
 $MAKE -C submodules/iso2opl clean all
 
 for isofile in PS2/*.iso; do
+   echo $isofile
    gameid="`head -c $(($bufsz*1024*1024)) "$isofile" | strings | grep BOOT2 | sed -z s/.*cdrom0:'\\\\'// | sed s/\;.*$//`"
    gameid="`echo $gameid | sed s/\ .*//`"
    if [ "$gameid" != "" ]; then
