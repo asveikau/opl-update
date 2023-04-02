@@ -22,28 +22,26 @@ $MAKE -C submodules/cue2pops clean all
 
 bufsz=20
 
-cd PSX
-for cuefile in *.cue; do
+for cuefile in PSX/*.cue; do
    echo $cuefile
    gameid=""
    grep ^FILE\ \" "$cuefile" | sed s/^FILE\ \"// | sed s/\"\ BINARY.*$// | while read binfile; do
       # Hacky way to parse gameid straight from the ISO, without proper parsing.
       # One advantage is this doesn't require loopback mounting (so you don't need to be root, and it's
       # quite portable.)
-      gameid="`head -c $(($bufsz*1024*1024)) "$binfile" | strings | grep BOOT | sed -z s/.*cdrom:'\\\\'// | sed s/\;.*$// `"
+      gameid="`head -c $(($bufsz*1024*1024)) "PSX/$binfile" | strings | grep BOOT | sed -z s/.*cdrom:'\\\\'// | sed s/\;.*$// `"
       gameid="`echo $gameid | sed s/\ .*//`"
       if [ "$gameid" != "" ]; then
          echo $gameid
-         filename=../out/POPS/"$gameid.`echo $cuefile | sed s/cue$/VCD/`"
+         filename=out/POPS/"$gameid.`echo $cuefile | cut -d / -f 2- | sed s/cue$/VCD/`"
          if [ -f "$filename" ]; then
             break;
          fi
-         ../submodules/cue2pops/cue2pops "$cuefile" "$filename"
+         submodules/cue2pops/cue2pops "$cuefile" "$filename"
          break;
       fi
    done
 done
-cd ..
 
 $MAKE -C submodules/iso2opl clean all
 
